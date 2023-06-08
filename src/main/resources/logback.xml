@@ -1,0 +1,31 @@
+<configuration>
+
+    <!-- Konsol üzerinde log çıktısını gösterir -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Dosyaya log çıktısını yazmak için -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/application.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger -->
+    <!--warn ve üzeri seviyeler FILE'a yönlendirir.-->
+    <root level="warn">
+        <appender-ref ref="FILE" />
+    </root>
+<!--    info ve üzeri seviyeler CONSOLE'a yönlendirir.-->
+        <root level="warn">
+            <appender-ref ref="CONSOLE" />
+        </root>
+
+    <!--    <logger name="com.example.swagger" level="info">-->
+    <!--        <appender-ref ref="CONSOLE" />-->
+    <!--    </logger>-->
+</configuration>
