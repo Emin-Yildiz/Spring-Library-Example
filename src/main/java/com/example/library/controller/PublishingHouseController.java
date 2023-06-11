@@ -4,6 +4,8 @@ import com.example.library.dto.request.PbHouseUpdateDTO;
 import com.example.library.dto.response.PbHouseGetResponseDTO;
 import com.example.library.entities.PublishingHouse;
 import com.example.library.services.PublishingHouseService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +22,29 @@ public class PublishingHouseController {
     }
 
     @GetMapping
-    public List<PbHouseGetResponseDTO> getAllPbHouse(){
-        return pbHouseService.getAllPbHouse();
+    public ResponseEntity<List<PbHouseGetResponseDTO>> getAllPbHouse(){
+        return ResponseEntity.ok(pbHouseService.getAllPbHouse());
     }
 
     @GetMapping("/{id}")
-    public PbHouseGetResponseDTO getPbHouseById(@PathVariable Long id){
-        return pbHouseService.getPbHouseById(id);
+    public ResponseEntity<PbHouseGetResponseDTO> getPbHouseById(@PathVariable Long id){
+        return ResponseEntity.ok(pbHouseService.getPbHouseById(id));
     }
 
     @PostMapping
-    public PublishingHouse addPbHouse(@RequestBody PublishingHouse pbHouse){
-        return pbHouseService.addPbHouse(pbHouse);
+    public ResponseEntity<PublishingHouse> addPbHouse(@RequestBody PublishingHouse pbHouse){
+        return new ResponseEntity<>(pbHouseService.addPbHouse(pbHouse), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public PublishingHouse updatePbHouse(@PathVariable Long id, @RequestBody PbHouseUpdateDTO updateDTO){
-        return pbHouseService.updatePbHouseById(id, updateDTO);
+    public ResponseEntity<PublishingHouse> updatePbHouse(@PathVariable Long id, @RequestBody PbHouseUpdateDTO updateDTO){
+        return new ResponseEntity<>(pbHouseService.updatePbHouseById(id, updateDTO),HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePbHouse(@PathVariable Long id){
+    public ResponseEntity<Void> deletePbHouse(@PathVariable Long id){
         pbHouseService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

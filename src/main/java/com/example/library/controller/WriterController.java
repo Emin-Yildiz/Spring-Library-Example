@@ -4,6 +4,7 @@ import com.example.library.dto.request.WriterUpdateDTO;
 import com.example.library.dto.response.WriterResponseDTO;
 import com.example.library.entities.Writer;
 import com.example.library.services.WriterService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -31,17 +32,18 @@ public class WriterController {
     }
 
     @PostMapping
-    public Writer addWriter(@RequestBody Writer writer){
-        return writerService.addWriter(writer);
+    public ResponseEntity<Writer> addWriter(@RequestBody Writer writer){
+        return new ResponseEntity<>(writerService.addWriter(writer), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Writer updateWritter(@PathVariable Long id, @RequestBody WriterUpdateDTO updateDTO){
-        return writerService.updateWriterById(id, updateDTO);
+    public ResponseEntity<Writer> updateWritter(@PathVariable Long id, @RequestBody WriterUpdateDTO updateDTO){
+        return new ResponseEntity<>(writerService.updateWriterById(id, updateDTO),HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteWritter(@PathVariable Long id){
+    public ResponseEntity<Void> deleteWritter(@PathVariable Long id){
         writerService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

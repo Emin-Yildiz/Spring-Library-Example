@@ -4,6 +4,8 @@ import com.example.library.dto.request.CategoryUpdateDTO;
 import com.example.library.dto.response.CategoryGetResponseDTO;
 import com.example.library.entities.Category;
 import com.example.library.services.CategoryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,28 +21,28 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<CategoryGetResponseDTO> getAllCategory(){
-        return categoryService.getAllCategory();
+    public ResponseEntity<List<CategoryGetResponseDTO>> getAllCategory(){
+        return ResponseEntity.ok(categoryService.getAllCategory());
     }
 
     @GetMapping("/{id}")
-    public CategoryGetResponseDTO getById(@PathVariable Long id){
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryGetResponseDTO> getById(@PathVariable Long id){
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
     @PostMapping
-    public Category addCategory(@RequestBody Category category){
-        return categoryService.addCategory(category);
-        //return ResponseEntity<>(categoryService.addCategory(category), HttpStatus.ACCEPTED);
+    public ResponseEntity<Category> addCategory(@RequestBody Category category){
+        return new ResponseEntity<>(categoryService.addCategory(category), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody CategoryUpdateDTO updateDTO){
-        return categoryService.updateById(id,updateDTO);
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody CategoryUpdateDTO updateDTO){
+        return new ResponseEntity<>(categoryService.updateById(id,updateDTO), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id){
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
         categoryService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
