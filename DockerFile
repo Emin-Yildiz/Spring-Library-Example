@@ -1,0 +1,10 @@
+# çalışması için gereken temel image dosyasını FROM  anahtar kelimesi ile belirtiriz.
+FROM openjdk:17
+# projenin çalışması için bir directory oluşturur.Docker konteynerının içindeki çalışma dizinini belirlemek için kullanılır.
+# Bu, Docker konteynerının içerisinde çalıştırılacak komutların ve dosyaların konumunu belirler.
+WORKDIR /app
+# Image oluşturulurken dosyaları image içine kopyalamak için kullanılır. Kaynak hedef bir URL olabilir yada bilgisayarda ki herhangi bir dosyada olur.
+ADD /target/library-0.0.1-SNAPSHOT.jar library-0.0.1-SNAPSHOT.jar
+# Docker container'ı çalıştığında çalışacak komut ve argümanlar belirtilir. İlk parmetre komut, ondan sonrakiler ise argümandır.
+ENTRYPOINT ["java", "-jar", "library-0.0.1-SNAPSHOT.jar"]
+# EXPOSE 8080
